@@ -64,8 +64,10 @@ the kg logo, and three actions.
 
 `kg serve` with no folder starts here; `kg serve <folder>` opens that folder
 directly. The top bar gets a way back to the start screen (click the logo).
-On GitHub Pages the start screen offers the published project, Import .zip,
-and New project in the browser (kept in memory, leaves by export).
+On GitHub Pages no project opens by itself. The start screen offers Open
+folder (Chrome and Edge only), New project in the browser (kept in memory,
+leaves by export), Import .zip, and the recent folders. A small "Show demo"
+link opens the published example.
 A browser cannot be given a folder path by a picker, so locally the folder
 is typed or picked from a simple folder list served by `kg serve`.
 
@@ -115,6 +117,20 @@ is typed or picked from a simple folder list served by `kg serve`.
   `kg serve` writes an imported zip to a new project folder. A project in the
   browser shows "In browser" in the top bar and the page warns before it is
   closed with changes not exported.
+- Open folder (Chrome and Edge, which have the File System Access API): the
+  start screen asks for a folder with the browser's picker and opens it as
+  the project. The page lists the canvases, notes, media and template.md
+  (hidden files, node_modules and _site are skipped) and Save writes the
+  changed files back into the folder, making subfolders such as assets/ when
+  needed and deleting removed files. Edits, undo and Save work as with
+  `kg serve`. An empty folder, or one without a canvas, can be started as a
+  project (an empty overview.canvas is written). The top bar shows the folder
+  name, and the page warns before it is closed with unsaved changes. The
+  folder handles of the last eight folders are kept in the browser
+  (IndexedDB) and listed as recent folders; the browser asks for write
+  permission again when one is opened in a later visit, and an entry can be
+  removed from the list. Browsers without the API (Safari, Firefox) do not
+  show Open folder or the recent folders.
 - No accounts and no cloud storage. Syncing is left to the folder the files
   live in (git, Google Drive app, Dropbox).
 

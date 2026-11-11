@@ -41,6 +41,10 @@ kg build my-map --out site
 
 `kg build` writes a read-only static site that any web server can host.
 
+In Chrome or Edge the website can also open a folder from your computer
+directly, for example a folder in Google Drive for desktop. Use Open folder on
+the start screen; edits are saved straight to the files in that folder.
+
 ## Files
 
 A project is a folder:
