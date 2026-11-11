@@ -1,0 +1,31 @@
+/* Note editor (live preview) */
+.note-editor { margin-top: 8px; border: 1px solid var(--line); border-radius: 10px; padding: 6px 12px; background: var(--bg); min-height: 60vh; cursor: text; }
+.note-editor:focus-within { border-color: var(--accent); }
+.note-editor .cm-editor { outline: none; font: inherit; }
+.note-editor .cm-scroller { font-family: inherit; line-height: inherit; }
+.note-editor .cm-content { min-height: 56vh; padding: 6px 0; caret-color: var(--text); font-family: inherit; }
+.note-editor .cm-line { padding: 1px 0; }
+.note-editor .cm-cursor { border-left-color: var(--text); }
+.note-editor .cm-selectionBackground, .note-editor .cm-editor.cm-focused .cm-selectionBackground { background: var(--accent-soft); }
+.note-editor .cm-h1 { font-size: 20px; font-weight: 700; margin: 6px 0 4px; }
+.note-editor .cm-h2, .note-editor .cm-h3, .note-editor .cm-h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); margin-top: 14px; }
+.note-editor .cm-strong { font-weight: 700; }
+.note-editor .cm-em { font-style: italic; }
+.note-editor .cm-strike { text-decoration: line-through; }
+.note-editor .cm-code { font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; background: var(--panel); padding: 1px 4px; border-radius: 4px; }
+.note-editor .cm-link, .note-editor .cm-wl, .note-editor .cm-wl-src { color: var(--accent-text); }
+.note-editor .cm-wl { cursor: pointer; }
+.note-editor .cm-wl.missing { color: var(--muted); text-decoration: line-through; }
+.note-editor .cm-bullet, .note-editor .cm-listnum { color: var(--muted); }
+.note-editor .cm-quote { border-left: 3px solid var(--line); padding-left: 10px; color: var(--muted); }
+.note-editor .cm-codeblock { font-family: ui-monospace, Menlo, monospace; font-size: 12px; background: var(--panel); padding: 0 10px; }
+.note-editor .cm-codeblock.cm-fence { color: var(--muted); }
+.note-editor .cm-math-display { text-align: center; margin: 6px 0; overflow-x: auto; }
+.note-editor .cm-math-src { font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; color: var(--muted); }
+.note-editor .cm-media { max-width: 100%; border-radius: 8px; vertical-align: middle; }
+.note-editor .cm-tooltip { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; color: var(--text); }
+.cm-tooltip-autocomplete ul li[aria-selected] { background: var(--accent-soft); color: var(--accent-text); }
+.mermaid-box { margin: 10px 0; text-align: center; overflow-x: auto; }
+.mermaid-box svg { max-width: 100%; height: auto; }
+.mermaid-error { color: var(--danger); font-size: 12px; }
+main.focused .note-editor { min-height: 72vh; }

@@ -1,0 +1,83 @@
+{
+	"nodes": [
+		{
+			"id": "g-view",
+			"type": "group",
+			"label": "Graph view",
+			"x": 40,
+			"y": 40,
+			"width": 550,
+			"height": 150,
+			"color": "2"
+		},
+		{
+			"id": "g-panel",
+			"type": "group",
+			"label": "Note panel",
+			"x": 40,
+			"y": 260,
+			"width": 550,
+			"height": 150,
+			"color": "3"
+		},
+		{
+			"id": "graph",
+			"type": "file",
+			"file": "notes/graph.md",
+			"x": 70,
+			"y": 85,
+			"width": 230,
+			"height": 64
+		},
+		{
+			"id": "zoom",
+			"type": "file",
+			"file": "notes/zoom-and-layout.md",
+			"x": 330,
+			"y": 85,
+			"width": 230,
+			"height": 64
+		},
+		{
+			"id": "save",
+			"type": "file",
+			"file": "notes/save-flow.md",
+			"x": 70,
+			"y": 305,
+			"width": 230,
+			"height": 64
+		},
+		{
+			"id": "pal",
+			"type": "file",
+			"file": "notes/palettes.md",
+			"x": 330,
+			"y": 305,
+			"width": 230,
+			"height": 64
+		},
+		{
+			"id": "sub",
+			"type": "file",
+			"file": "page-editor.canvas",
+			"x": 680,
+			"y": 300,
+			"width": 230,
+			"height": 64
+		}
+	],
+	"edges": [
+		{
+			"id": "e1",
+			"fromNode": "g-view",
+			"toNode": "g-panel",
+			"label": "opens notes in"
+		},
+		{
+			"id": "e2",
+			"fromNode": "sub",
+			"toNode": "g-panel",
+			"label": "details"
+		}
+	]
+}

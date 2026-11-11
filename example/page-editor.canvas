@@ -1,0 +1,64 @@
+{
+	"nodes": [
+		{
+			"id": "g-ed",
+			"type": "group",
+			"label": "Editing",
+			"x": 40,
+			"y": 40,
+			"width": 550,
+			"height": 150,
+			"color": "5"
+		},
+		{
+			"id": "ed",
+			"type": "file",
+			"file": "notes/note-editor.md",
+			"x": 70,
+			"y": 85,
+			"width": 230,
+			"height": 64
+		},
+		{
+			"id": "md",
+			"type": "file",
+			"file": "notes/markdown-notes.md",
+			"x": 330,
+			"y": 85,
+			"width": 230,
+			"height": 64
+		},
+		{
+			"id": "t",
+			"type": "text",
+			"text": "Live preview: markup shows only on the line with the cursor.",
+			"x": 70,
+			"y": 260,
+			"width": 300,
+			"height": 90
+		},
+		{
+			"id": "sv",
+			"type": "file",
+			"file": "notes/save-flow.md",
+			"x": 420,
+			"y": 276,
+			"width": 230,
+			"height": 64
+		}
+	],
+	"edges": [
+		{
+			"id": "e1",
+			"fromNode": "t",
+			"toNode": "g-ed",
+			"label": "explains"
+		},
+		{
+			"id": "e2",
+			"fromNode": "sv",
+			"toNode": "g-ed",
+			"label": "saves"
+		}
+	]
+}

@@ -1,0 +1,81 @@
+/* Palettes: five, each light and dark. Selected by data-palette and data-mode
+   on <html> (or on any element, for the swatches in the menu). The first block
+   is the default (Porcelain, light). Everything below the palettes is derived. */
+:root {
+  --bg: #faf8f5; --panel: #ffffff; --line: #ebe6df; --text: #2b2926; --muted: #8a847b; --accent: #c27c5c; --edge: #b9b2a8;
+  --g1: #fbeee6; --b1: #f1cdb8; --g2: #eef4ec; --b2: #c9dcc3; --g3: #f2eefa; --b3: #d6cbee; --g4: #eaf3f9; --b4: #c0d9ea; --g5: #fbf6e3; --b5: #ecdfa8; --g6: #f8ebef; --b6: #e8c5d0;
+}
+[data-palette="porcelain"][data-mode="light"] {
+  --bg: #faf8f5; --panel: #ffffff; --line: #ebe6df; --text: #2b2926; --muted: #8a847b; --accent: #c27c5c; --edge: #b9b2a8;
+  --g1: #fbeee6; --b1: #f1cdb8; --g2: #eef4ec; --b2: #c9dcc3; --g3: #f2eefa; --b3: #d6cbee; --g4: #eaf3f9; --b4: #c0d9ea; --g5: #fbf6e3; --b5: #ecdfa8; --g6: #f8ebef; --b6: #e8c5d0;
+}
+[data-palette="porcelain"][data-mode="dark"] {
+  --bg: #1c1a18; --panel: #252220; --line: #3a3632; --text: #efe9e2; --muted: #a39a90; --accent: #e3a587; --edge: #6f675f;
+  --g1: #3a2c25; --b1: #7a5644; --g2: #263027; --b2: #4f6b4c; --g3: #2c2838; --b3: #5e5380; --g4: #222e36; --b4: #466679; --g5: #34301f; --b5: #7a6c38; --g6: #38272c; --b6: #7a4c5a;
+}
+[data-palette="mist"][data-mode="light"] {
+  --bg: #f5f7fa; --panel: #ffffff; --line: #e2e7ee; --text: #1e2530; --muted: #7a8494; --accent: #5b7fd6; --edge: #a9b3c2;
+  --g1: #edf0fc; --b1: #c7d0f3; --g2: #eaf6f2; --b2: #bfe1d5; --g3: #fbeff2; --b3: #efc9d3; --g4: #f3eefb; --b4: #d7c9f0; --g5: #eaf5fa; --b5: #bfdeea; --g6: #fdf3e6; --b6: #f0d6b0;
+}
+[data-palette="mist"][data-mode="dark"] {
+  --bg: #151a21; --panel: #1c222b; --line: #2d3540; --text: #e6ebf2; --muted: #8d97a6; --accent: #8fa9f0; --edge: #5d6878;
+  --g1: #232a40; --b1: #4a5a8f; --g2: #1f322c; --b2: #43715f; --g3: #3a2730; --b3: #82566a; --g4: #2d2640; --b4: #62538f; --g5: #1f303a; --b5: #447282; --g6: #392e1f; --b6: #80663d;
+}
+[data-palette="garden"][data-mode="light"] {
+  --bg: #f6f7f2; --panel: #ffffff; --line: #e3e6da; --text: #232821; --muted: #7d8577; --accent: #5f8f6a; --edge: #aab3a2;
+  --g1: #ecf3e8; --b1: #c8dcbe; --g2: #f0f2e2; --b2: #d8ddb0; --g3: #f9eeec; --b3: #ebc8c2; --g4: #f7efe6; --b4: #e3cdb2; --g5: #e8f3f1; --b5: #bcdcd6; --g6: #f1ecf6; --b6: #d4c8e2;
+}
+[data-palette="garden"][data-mode="dark"] {
+  --bg: #161a16; --panel: #1e231e; --line: #303830; --text: #e7ece3; --muted: #95a08f; --accent: #8fc49b; --edge: #637061;
+  --g1: #233023; --b1: #4c6b47; --g2: #2d3020; --b2: #686d3e; --g3: #3a2826; --b3: #80534c; --g4: #362c22; --b4: #7a5f42; --g5: #1f3230; --b5: #447670; --g6: #2d2838; --b6: #5f5278;
+}
+[data-palette="sorbet"][data-mode="light"] {
+  --bg: #fdf9fb; --panel: #ffffff; --line: #efe5ea; --text: #2c2430; --muted: #8e8093; --accent: #c46ba0; --edge: #bba9b8;
+  --g1: #fdecef; --b1: #f5c3cc; --g2: #fef1e4; --b2: #f6d1a8; --g3: #eef7e6; --b3: #cbe5b5; --g4: #ecf0fd; --b4: #c6d0f6; --g5: #f4ecfb; --b5: #dcc6f1; --g6: #e8f6f4; --b6: #b9e0da;
+}
+[data-palette="sorbet"][data-mode="dark"] {
+  --bg: #1d171c; --panel: #261f25; --line: #3b3139; --text: #f3e9f0; --muted: #a8979f; --accent: #ec9ccb; --edge: #74646f;
+  --g1: #3f2329; --b1: #8c4c59; --g2: #3d2d1e; --b2: #86643d; --g3: #26331f; --b3: #557343; --g4: #232a40; --b4: #4f5c94; --g5: #33253f; --b5: #6c4f8d; --g6: #1f3331; --b6: #47736e;
+}
+[data-palette="ink"][data-mode="light"] {
+  --bg: #f7f6f4; --panel: #ffffff; --line: #e4e2de; --text: #151515; --muted: #6f6c66; --accent: #2a2a2a; --edge: #9c9891;
+  --g1: #f2efea; --b1: #dcd5ca; --g2: #eef0ee; --b2: #d1d8d0; --g3: #f1eef0; --b3: #dbd1d7; --g4: #edeff2; --b4: #d0d6de; --g5: #f2f1ea; --b5: #dcd9c8; --g6: #f0eeee; --b6: #d9d4d4;
+}
+[data-palette="ink"][data-mode="dark"] {
+  --bg: #121212; --panel: #1a1a1a; --line: #2c2c2c; --text: #f2f2f2; --muted: #8f8f8f; --accent: #e8e8e8; --edge: #5c5c5c;
+  --g1: #1f1d1a; --b1: #45403a; --g2: #1b1e1b; --b2: #3d453c; --g3: #1f1b1e; --b3: #463d43; --g4: #1b1d20; --b4: #3c424b; --g5: #1f1e1a; --b5: #46443a; --g6: #1e1c1c; --b6: #433e3e;
+}
+
+/* Derived tokens, shared by all palettes. Light is the default. */
+:root, [data-mode="light"] {
+  --hover: color-mix(in srgb, var(--text) 6%, var(--bg));
+  --accent-soft: color-mix(in srgb, var(--accent) 16%, var(--panel));
+  --accent-text: color-mix(in srgb, var(--accent) 72%, var(--text));
+  --accent-fill: color-mix(in srgb, var(--accent) 80%, #000);
+  --on-accent: #ffffff;
+  --grid: color-mix(in srgb, var(--line) 75%, var(--muted));
+  --shadow: rgba(0, 0, 0, .08);
+  --danger: #c0362c;
+  --h-kw: color-mix(in srgb, #8250df 92%, var(--text));
+  --h-str: color-mix(in srgb, #1a7f37 92%, var(--text));
+  --h-num: color-mix(in srgb, #b35900 92%, var(--text));
+  --h-com: var(--muted);
+  --h-fn: color-mix(in srgb, #0b62d6 92%, var(--text));
+  --h-attr: color-mix(in srgb, #b1275b 92%, var(--text));
+}
+[data-mode="dark"] {
+  --hover: color-mix(in srgb, var(--text) 8%, var(--bg));
+  --accent-soft: color-mix(in srgb, var(--accent) 20%, var(--panel));
+  --accent-text: var(--accent);
+  --accent-fill: var(--accent);
+  --on-accent: var(--bg);
+  --grid: color-mix(in srgb, var(--line) 80%, var(--muted));
+  --shadow: rgba(0, 0, 0, .35);
+  --danger: #f08a80;
+  --h-kw: color-mix(in srgb, #c4a1ff 92%, var(--text));
+  --h-str: color-mix(in srgb, #8fd19e 92%, var(--text));
+  --h-num: color-mix(in srgb, #f0b072 92%, var(--text));
+  --h-com: var(--muted);
+  --h-fn: color-mix(in srgb, #8db4ff 92%, var(--text));
+  --h-attr: color-mix(in srgb, #f29bbd 92%, var(--text));
+}

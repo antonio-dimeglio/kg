@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>kg</title>
+<link rel="icon" href="data:,">
+<script>
+(function () {
+  var p = "porcelain", m = "light";
+  try {
+    var t = JSON.parse(localStorage.getItem("kg-theme"));
+    if (["porcelain", "mist", "garden", "sorbet", "ink"].indexOf(t.palette) >= 0 && (t.mode === "light" || t.mode === "dark")) { p = t.palette; m = t.mode; }
+  } catch (e) {}
+  document.documentElement.dataset.palette = p;
+  document.documentElement.dataset.mode = m;
+})();
+</script>
+</head>
+<body>
+<div id="root"></div>
+<script type="module" src="/app/main.tsx"></script>
+</body>
+</html>

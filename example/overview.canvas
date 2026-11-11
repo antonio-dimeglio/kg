@@ -1,0 +1,178 @@
+{
+	"nodes": [
+		{
+			"id": "g-files",
+			"type": "group",
+			"label": "Files",
+			"x": 40,
+			"y": 40,
+			"width": 550,
+			"height": 150,
+			"color": "1"
+		},
+		{
+			"id": "g-cli",
+			"type": "group",
+			"label": "CLI",
+			"x": 650,
+			"y": 40,
+			"width": 550,
+			"height": 150,
+			"color": "2"
+		},
+		{
+			"id": "g-page",
+			"type": "group",
+			"label": "Page",
+			"x": 40,
+			"y": 260,
+			"width": 810,
+			"height": 150,
+			"color": "3"
+		},
+		{
+			"id": "g-share",
+			"type": "group",
+			"label": "Sharing",
+			"x": 40,
+			"y": 500,
+			"width": 550,
+			"height": 150,
+			"color": "4"
+		},
+		{
+			"id": "canvas",
+			"type": "file",
+			"file": "notes/canvas-format.md",
+			"x": 70,
+			"y": 85,
+			"width": 230,
+			"height": 64
+		},
+		{
+			"id": "notes",
+			"type": "file",
+			"file": "notes/markdown-notes.md",
+			"x": 330,
+			"y": 85,
+			"width": 230,
+			"height": 64
+		},
+		{
+			"id": "cli",
+			"type": "file",
+			"file": "notes/cli.md",
+			"x": 680,
+			"y": 85,
+			"width": 230,
+			"height": 64
+		},
+		{
+			"id": "save",
+			"type": "file",
+			"file": "notes/save-flow.md",
+			"x": 940,
+			"y": 85,
+			"width": 230,
+			"height": 64
+		},
+		{
+			"id": "graph",
+			"type": "file",
+			"file": "notes/graph.md",
+			"x": 70,
+			"y": 305,
+			"width": 230,
+			"height": 64
+		},
+		{
+			"id": "editor",
+			"type": "file",
+			"file": "notes/note-editor.md",
+			"x": 330,
+			"y": 305,
+			"width": 230,
+			"height": 64
+		},
+		{
+			"id": "pal",
+			"type": "file",
+			"file": "notes/palettes.md",
+			"x": 590,
+			"y": 305,
+			"width": 230,
+			"height": 64
+		},
+		{
+			"id": "zip",
+			"type": "file",
+			"file": "notes/zip-sharing.md",
+			"x": 70,
+			"y": 545,
+			"width": 230,
+			"height": 64
+		},
+		{
+			"id": "start",
+			"type": "file",
+			"file": "notes/start-here.md",
+			"x": 330,
+			"y": 545,
+			"width": 230,
+			"height": 64
+		},
+		{
+			"id": "sub",
+			"type": "file",
+			"file": "page.canvas",
+			"x": 920,
+			"y": 300,
+			"width": 230,
+			"height": 64
+		},
+		{
+			"id": "q",
+			"type": "text",
+			"text": "Open question: should a note be able to belong to more than one group?",
+			"x": 650,
+			"y": 510,
+			"width": 300,
+			"height": 110
+		},
+		{
+			"id": "spec",
+			"type": "link",
+			"url": "https://jsoncanvas.org",
+			"x": 990,
+			"y": 520,
+			"width": 260,
+			"height": 80
+		}
+	],
+	"edges": [
+		{
+			"id": "e1",
+			"fromNode": "g-cli",
+			"toNode": "g-files",
+			"label": "reads and writes"
+		},
+		{
+			"id": "e2",
+			"fromNode": "g-page",
+			"toNode": "g-files",
+			"label": "shows"
+		},
+		{
+			"id": "e3",
+			"fromNode": "g-page",
+			"toNode": "g-share",
+			"label": "exports"
+		},
+		{
+			"id": "e4",
+			"fromNode": "sub",
+			"toNode": "g-page",
+			"label": "details"
+		}
+	]
+}
