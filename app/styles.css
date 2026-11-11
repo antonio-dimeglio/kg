@@ -190,3 +190,8 @@ aside.drop { outline: 2px dashed var(--accent); outline-offset: -4px; }
 .projects { padding: 3px 10px; }
 .start .continue { margin-bottom: 14px; padding: 8px 20px; }
 .start .actions label.btn { display: inline-flex; align-items: center; }
+.start .recent-row { display: flex; align-items: center; }
+.start .recent-row button:first-child { flex: 1; }
+.start .recent-row .forget { color: var(--muted); padding: 4px 9px; }
+.start .demo-link { margin-top: 26px; font-size: 12px; color: var(--muted); cursor: pointer; text-decoration: underline; }
+.start .demo-link:hover { color: var(--text); }

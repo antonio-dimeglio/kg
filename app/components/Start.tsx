@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { PaletteMenu } from "./PaletteMenu";
 import { type DirList, importFiles, listDirs, listRecent, newProject, openProject } from "../startApi";
 import { store, useStore } from "../useStore";
+import { FolderBackend, emptyCanvas, foldersSupported, pickFolder, type DirH } from "../folder";
+import { ensureAccess, forgetFolder, loadRecent, rememberFolder, type RecentFolder } from "../recentFolders";
 import { importZipInBrowser, newInBrowser, readZipFile } from "../transfer";
 
 type Action = "new" | "open" | "import";
@@ -130,6 +132,28 @@ export function Start({ published, onOpened }: { published: boolean; onOpened: (
   }, onOpened);
   const canContinue = left !== "" && (published || store.parked || recent.length > 0);
   const cont = canContinue && <button className="btn primary continue" onClick={again}>Continue {left}</button>;
+  const [folders, setFolders] = useState<RecentFolder[]>([]);
+  const [empty, setEmpty] = useState<FolderBackend | null>(null);
+  useEffect(() => { if (published && foldersSupported()) void loadRecent().then(setFolders); }, [published]);
+  // The folder picker; null when it was cancelled.
+  const chosen = async (): Promise<DirH | null> => {
+    try {
+      return await pickFolder();
+    } catch (e) {
+      if (e instanceof DOMException && e.name === "AbortError") return null;
+      throw e;
+    }
+  };
+  // Opens a folder as the project, or asks first when it holds no canvas.
+  const openDir = async (dir: DirH): Promise<void> => {
+    const backend = new FolderBackend(dir);
+    if (!(await backend.scan()).some((p) => p.endsWith(".canvas"))) {
+      setEmpty(backend);
+      throw new Error(""); // stops here; the question shows instead
+    }
+    await store.openFolder(backend);
+    await rememberFolder(dir);
+  };
   const pick = (a: Action) => { setAction(a); setError(""); };
   if (published) {
     return (
@@ -137,8 +161,9 @@ export function Start({ published, onOpened }: { published: boolean; onOpened: (
         <PaletteMenu className="pal-top" />
         <div className="logo big">k<span>g</span></div>
         <div className="actions">
-          {cont || <button className="btn primary" onClick={onOpened}>Open published project</button>}
-          {cont && <button className="btn" onClick={onOpened}>Open published project</button>}
+          {cont}
+          {foldersSupported() && <button className={"btn" + (cont ? "" : " primary")} onClick={() => run(async () => { const h = await chosen(); if (h) await openDir(h); }, onOpened)}>Open folder</button>}
+          <button className="btn" onClick={() => run(newInBrowser, onOpened)}>New project</button>
           <label className="btn">
             Import .zip
             <input type="file" accept=".zip,application/zip" hidden onChange={(e) => {
@@ -147,9 +172,36 @@ export function Start({ published, onOpened }: { published: boolean; onOpened: (
               if (file) run(() => importZipInBrowser(file), onOpened);
             }} />
           </label>
-          <button className="btn" onClick={() => run(newInBrowser, onOpened)}>New project</button>
         </div>
+        {empty && (
+          <div className="start-panel">
+            <div className="panel-body">
+              <div>{empty.name} has no canvas yet. Start a project in it?</div>
+              <div className="row end">
+                <button className="btn" onClick={() => setEmpty(null)}>Cancel</button>
+                <button className="btn primary" onClick={() => run(async () => { await empty.write("overview.canvas", emptyCanvas()); await openDir(empty.dir); }, onOpened)}>Start project</button>
+              </div>
+            </div>
+          </div>
+        )}
         {error && <div className="start-error">{error}</div>}
+        {foldersSupported() && folders.length > 0 && (
+          <div className="start-panel">
+            <label>Recent folders</label>
+            <div className="recent">
+              {folders.map((f) => (
+                <div className="recent-row" key={f.name + folders.indexOf(f)}>
+                  <button onClick={() => run(async () => {
+                    if (!(await ensureAccess(f.handle))) throw new Error("Permission to the folder was denied");
+                    await openDir(f.handle);
+                  }, onOpened)}><b>{f.name}</b></button>
+                  <button className="forget" title="Remove from the list" aria-label={`Remove ${f.name}`} onClick={() => void forgetFolder(f.handle).then(setFolders)}>&times;</button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        <a className="demo-link" onClick={onOpened}>Show demo</a>
       </div>
     );
   }

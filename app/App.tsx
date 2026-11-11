@@ -25,7 +25,13 @@ export function App() {
   const [query, setQuery] = useState("");
 
   // Loads the project the server has open and picks the first canvas.
-  const init = () => store.load().then(() => {
+  const init = (initial = false) => store.load().then(() => {
+      // The published site opens on the start screen, not on its example.
+      if (initial && store.getState().published) {
+        history.replaceState(null, "", location.pathname + location.search);
+        store.showStart();
+        return;
+      }
       const p = store.getState().project;
       if (!p) return;
       const hash = readHash();
@@ -39,14 +45,17 @@ export function App() {
       if (t === "links" || t === "json") setTab(t);
     });
 
-  useEffect(() => { void init(); }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { void init(true); }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const canvas = project?.canvases[canvasPath];
 
   // A project kept in the browser is lost on closing the page unless exported.
   useEffect(() => {
     const warn = (e: BeforeUnloadEvent) => {
-      if (store.unexported) e.preventDefault();
+      if (store.unexported) {
+        e.preventDefault();
+        e.returnValue = "";
+      }
     };
     window.addEventListener("beforeunload", warn);
     return () => window.removeEventListener("beforeunload", warn);

@@ -16,7 +16,7 @@ interface Props {
 }
 
 export function TopBar({ project, trail, onTrail, query, onQuery, canvasPath, notePath }: Props) {
-  const { mode, dirty, saving, saveError, memory } = useStore();
+  const { mode, dirty, saving, saveError, memory, folder } = useStore();
   const writable = project.manifest.writable === true;
   const [asking, setAsking] = useState(false);
   const home = () => {
@@ -51,6 +51,7 @@ export function TopBar({ project, trail, onTrail, query, onQuery, canvasPath, no
       )}
       <div className="spacer" />
       {memory && <span className="mem" title="This project is kept in this browser only. Download it to keep it.">In browser</span>}
+      {folder && <span className="mem" title="Saved straight to the files of this folder">{folder}</span>}
       {writable && (
         <>
           {saveError && <span className="save-error" title={saveError}>Save failed</span>}

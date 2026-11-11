@@ -1,5 +1,7 @@
 import { serializeCanvas } from "../src/canvas";
+import { FolderBackend } from "./folder";
 import { MemoryBackend } from "./memory";
+import { ensureAccess } from "./recentFolders";
 import { loadProject, type Project } from "./project";
 
 export type Mode = "view" | "edit";
@@ -12,6 +14,8 @@ export interface StoreState {
   left: string;
   // True when the open project lives in the browser only (imported or new).
   memory: boolean;
+  // Name of the folder on disk the open project is saved to; empty when none.
+  folder: string;
   // True when the project is a static published site: nothing can be saved,
   // and there is no server to ask.
   published: boolean;
@@ -56,11 +60,12 @@ export const httpBackend: Backend = {
 // Holds the loaded project and the unsaved changes. Steps that edit call
 // setFile / setCanvas / removeFile; save() writes them all; reload() refetches.
 export class ProjectStore {
-  private state: StoreState = { project: null, home: false, published: false, memory: false, left: "", error: "", mode: "view", dirty: new Map(), saving: false, saveError: "" };
+  private state: StoreState = { project: null, home: false, published: false, memory: false, folder: "", left: "", error: "", mode: "view", dirty: new Map(), saving: false, saveError: "" };
   private removed = new Set<string>();
   private listeners = new Set<() => void>();
 
   private memoryBackend: MemoryBackend | null = null;
+  private folderBackend: FolderBackend | null = null;
   private exportedRev = 0;
 
   constructor(private backend: Backend = httpBackend) {}
@@ -96,7 +101,7 @@ export class ProjectStore {
   async load(): Promise<void> {
     try {
       const project = await this.backend.load();
-      const published = this.state.memory ? this.state.published : project !== null && project.manifest.writable === false;
+      const published = this.state.memory || this.state.folder ? this.state.published : project !== null && project.manifest.writable === false;
       this.set({ project, home: project === null, published, left: project ? "" : this.state.left, error: "" });
     } catch (e) {
       this.set({ error: e instanceof Error ? e.message : String(e) });
@@ -122,14 +127,33 @@ export class ProjectStore {
     await this.load();
   }
 
+  // Opens a folder on disk as the project. Saving writes to its files.
+  async openFolder(folder: FolderBackend): Promise<void> {
+    this.dropMemory();
+    this.folderBackend = folder;
+    this.backend = folder;
+    this.removed.clear();
+    this.set({ memory: false, folder: folder.name, dirty: new Map(), mode: "view", saveError: "" });
+    await this.load();
+  }
+
+  // Shows the start screen without opening anything, for the published site.
+  showStart(): void {
+    this.set({ project: null, home: true, left: "", error: "" });
+  }
+
   private dropMemory(): void {
     this.memoryBackend?.dispose();
     this.memoryBackend = null;
+    this.folderBackend?.dispose();
+    this.folderBackend = null;
     this.backend = httpBackend;
   }
 
-  // True for a browser-only project with changes that were not exported.
+  // True when closing the page would lose work: a browser-only project with
+  // changes that were not exported, or a folder with changes not saved.
   get unexported(): boolean {
+    if (this.state.folder) return this.hasChanges;
     return this.memoryBackend !== null && (this.hasChanges || (this.memoryBackend?.rev ?? 0) !== this.exportedRev);
   }
 
@@ -166,7 +190,7 @@ export class ProjectStore {
   // so the caller asks first. A browser-only project is kept for Continue.
   async leave(): Promise<void> {
     const name = this.state.project?.manifest.name ?? "";
-    if (this.state.memory) this.backend = httpBackend;
+    if (this.state.memory || this.state.folder) this.backend = httpBackend;
     else if (!this.state.published) {
       try {
         await this.backend.close();
@@ -176,19 +200,24 @@ export class ProjectStore {
       }
     }
     this.removed.clear();
-    this.set({ project: null, home: true, memory: false, left: name, mode: "view", dirty: new Map(), saveError: "", error: "" });
+    this.set({ project: null, home: true, memory: false, folder: "", left: name, mode: "view", dirty: new Map(), saveError: "", error: "" });
   }
 
-  // True when a browser-only project was left and can be opened again.
+  // True when a browser-only project or a folder was left and can be opened again.
   get parked(): boolean {
-    return this.memoryBackend !== null && !this.state.memory;
+    return (this.memoryBackend !== null || this.folderBackend !== null) && !this.state.memory && !this.state.folder;
   }
 
-  // Opens the browser-only project that was left.
+  // Opens the project that was left: the browser-only one or the folder.
   async resume(): Promise<void> {
-    if (!this.memoryBackend) return;
-    this.backend = this.memoryBackend;
-    this.set({ memory: true });
+    if (this.memoryBackend) {
+      this.backend = this.memoryBackend;
+      this.set({ memory: true });
+    } else if (this.folderBackend) {
+      if (!(await ensureAccess(this.folderBackend.dir))) throw new Error("Permission to the folder was denied");
+      this.backend = this.folderBackend;
+      this.set({ folder: this.folderBackend.name });
+    } else return;
     await this.load();
   }
 
